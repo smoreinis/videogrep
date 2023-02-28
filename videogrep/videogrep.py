@@ -315,6 +315,8 @@ def create_supercut(composition: List[dict], outputfile: str):
         remove_temp=True,
         audio_codec="aac",
     )
+    for clip in videofileclips.values():
+        clip.close()
 
 
 def create_supercut_in_batches(composition: List[dict], outputfile: str):
@@ -352,8 +354,9 @@ def create_supercut_in_batches(composition: List[dict], outputfile: str):
     )
 
     # remove partial video files
-    for filename in batch_comp:
-        os.remove(filename)
+    for clip in clips:
+        clip.close()
+        os.remove(clip.filename)
 
     cleanup_log_files(outputfile)
 
